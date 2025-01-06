@@ -10,6 +10,20 @@
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6">
             <h1 class="text-2xl font-bold text-center mb-6">Dune Dashboard Sharer</h1>
+            
+            <!-- Login reminder -->
+            <div class="mb-6 p-4 bg-yellow-50 rounded-md border border-yellow-200">
+                <h2 class="text-sm font-semibold text-yellow-800 mb-2">⚠️ Before you start:</h2>
+                <p class="text-sm text-yellow-700">
+                    Please make sure you have:
+                    <ol class="list-decimal list-inside mt-2 space-y-1">
+                        <li>Opened and logged into <a href="https://dune.com" target="_blank" class="text-blue-600 hover:underline">dune.com</a></li>
+                        <li>Opened and logged into <a href="https://x.com" target="_blank" class="text-blue-600 hover:underline">x.com</a></li>
+                    </ol>
+                    in your browser for the sharing process to work properly.
+                </p>
+            </div>
+            
             <form id="shareForm" class="space-y-4">
                 <div>
                     <label for="dashboard_url" class="block text-sm font-medium text-gray-700">Dashboard URL</label>
@@ -58,7 +72,7 @@
                     resultDiv.classList.add('bg-green-100');
                     resultMessage.classList.add('text-green-700');
                     
-                    // 5秒后清除结果消息
+                    // Clear result message after 5 seconds
                     setTimeout(() => {
                         resultDiv.classList.add('hidden');
                     }, 5000);
