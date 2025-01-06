@@ -345,7 +345,7 @@ class DuneSharer:
                 twitter_page.wait_for_selector('div[data-testid="tweetTextarea_0"]')
                 
                 # Enter tweet text
-                tweet_text = f"Check out this Dune Analytics dashboard: {dashboard_url}"
+                tweet_text = f"Check out this Dune Analytics dashboard: "
                 twitter_page.fill('div[data-testid="tweetTextarea_0"]', tweet_text)
                 
                 # Upload screenshots
