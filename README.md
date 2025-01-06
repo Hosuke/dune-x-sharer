@@ -1,83 +1,116 @@
 # Dune Dashboard Sharer
 
-一个用于捕获 Dune Analytics 仪表板图表和数据的工具。
+A powerful tool for capturing and sharing Dune Analytics dashboard charts and data on Twitter/X.
 
-## 功能特点
+## Features
 
-- 自动捕获仪表板中的图表和数据列表
-- 智能识别不同类型的可视化内容（图表、表格、列表等）
-- 保持原始分辨率和质量
-- 支持多种图表类型（Canvas, SVG, ECharts, Highcharts等）
-- 自动优化大尺寸图表的质量
+- Automatically capture charts and data visualizations from Dune dashboards
+- Smart detection of different visualization types (charts, tables, lists)
+- Maintains original resolution and quality
+- Supports various chart types (Canvas, SVG, ECharts, Highcharts, etc.)
+- Automatic quality optimization for large visualizations
+- Direct sharing to Twitter/X using your browser session
 
-## 安装要求
+## Requirements
 
 - Python 3.8+
-- Chrome 浏览器
+- Google Chrome browser
 
-## 安装步骤
+## Installation
 
-1. 克隆仓库：
+1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/dune-x-sharer.git
 cd dune-x-sharer
 ```
 
-2. 创建并激活虚拟环境：
+2. Create and activate virtual environment:
 ```bash
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# 或
+# or
 .\venv\Scripts\activate  # Windows
 ```
 
-3. 安装依赖：
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-4. 安装 Playwright：
+4. Install Playwright:
 ```bash
 playwright install chromium
 ```
 
-5. 复制环境变量文件：
+5. Copy environment variables file:
 ```bash
 cp .env.example .env
 ```
 
-## 启动说明
+## Usage
 
-1. 启动 Chrome 浏览器并登录 Dune Analytics
-2. 启动服务：
+1. Start Chrome with remote debugging:
+```bash
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222
+```
+
+2. Log into Dune Analytics and Twitter/X in Chrome
+3. Start the service:
 ```bash
 python -m flask run --port 5001
 ```
-3. 在浏览器中打开要分享的 Dune 仪表板
-4. 点击分享按钮
-5. 截图将保存在 `output/screenshots` 目录中
+4. Open the Dune dashboard you want to share
+5. Click the share button
+6. Screenshots will be automatically shared to Twitter/X
 
-## 配置说明
+## Configuration
 
-在 `.env` 文件中设置以下环境变量：
+Set the following environment variables in `.env`:
 
-- `FLASK_APP`: 应用入口文件
-- `FLASK_ENV`: 运行环境
-- `FLASK_DEBUG`: 调试模式
-- `PORT`: 服务端口
-- `HOST`: 服务地址
-- `LOG_LEVEL`: 日志级别
+- `FLASK_APP`: Application entry point
+- `FLASK_ENV`: Running environment
+- `FLASK_DEBUG`: Debug mode
+- `PORT`: Service port
+- `HOST`: Service address
+- `LOG_LEVEL`: Logging level
 
-## 注意事项
+## Important Notes
 
-- 确保 Chrome 浏览器已经登录 Dune Analytics
-- 图表加载可能需要一些时间，请耐心等待
-- 建议使用 1920x1080 或更高的屏幕分辨率
+- Ensure Chrome browser is logged into both Dune Analytics and Twitter/X
+- Chart loading may take some time, please be patient
+- Recommended screen resolution: 1920x1080 or higher
 
-## 贡献指南
+## Future Roadmap
 
-欢迎提交 Pull Requests 和 Issues！
+### Planned Features
 
-## 许可证
+1. **Smart Thread Creation**
+   - Automatic batch processing of dashboard content
+   - Intelligent slicing of content into Twitter threads
+   - Smart content organization for better storytelling
+
+2. **AI-Powered Enhancements**
+   - AI agent for optimal chart composition and layout
+   - Smart caption generation for charts
+   - Context-aware content organization
+   - Automated chart styling and theme application
+
+3. **Advanced Sharing Features**
+   - Support for more social platforms
+   - Customizable sharing templates
+   - Scheduled posting
+   - Analytics and engagement tracking
+
+4. **Visualization Improvements**
+   - Custom chart annotations
+   - Interactive preview before sharing
+   - Theme customization
+   - Watermark and branding options
+
+## Contributing
+
+Contributions are welcome! Feel free to submit Pull Requests and Issues.
+
+## License
 
 MIT License

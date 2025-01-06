@@ -31,9 +31,6 @@ def index():
 def share_dashboard():
     """Share a Dune Analytics dashboard"""
     try:
-        # Clean up old screenshots
-        cleanup_screenshots()
-        
         # Get dashboard URL
         dashboard_url = request.form.get('dashboard_url')
         if not dashboard_url:
@@ -58,6 +55,9 @@ def share_dashboard():
             
             # Share on Twitter/X
             sharer.share_on_twitter(dashboard_url, screenshots)
+            
+            # Clean up screenshots after successful sharing
+            cleanup_screenshots()
             
             return jsonify({
                 'status': 'success',
