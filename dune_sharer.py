@@ -312,7 +312,7 @@ class DuneSharer:
             raise
 
     def share_on_twitter(self, dashboard_url, screenshots):
-        """Share screenshots on Twitter/X using thread for more than 4 images"""
+        """Share screenshots on Twitter/X"""
         try:
             # Connect to user's Chrome browser via CDP
             playwright = sync_playwright().start()
@@ -329,7 +329,6 @@ class DuneSharer:
                 for page in pages:
                     if 'twitter.com' in page.url:
                         twitter_page = page
-                        self.logger.info("Found existing Twitter page")
                         break
                 
                 if not twitter_page:
@@ -341,35 +340,28 @@ class DuneSharer:
                     twitter_page.bring_to_front()
                     twitter_page.goto('https://twitter.com/compose/tweet')
                 
-                # Wait for tweet button
-                twitter_page.wait_for_selector('div[data-testid="tweetTextarea_0"]')
+                # Wait for tweet box to be ready
+                twitter_page.wait_for_selector('div[data-testid="tweetTextarea_0"]', state="visible")
+                time.sleep(2)
                 
-                # Process screenshots in batches of 4
-                for i in range(0, len(screenshots), 4):
-                    batch = screenshots[i:i+4]
-                    
-                    # Enter tweet text
-                    tweet_text = "Check out this Dune Analytics dashboard: " if i == 0 else ""
-                    twitter_page.fill('div[data-testid="tweetTextarea_0"]', tweet_text)
-                    
-                    # Upload screenshots for this batch
-                    for screenshot in batch:
-                        file_input = twitter_page.wait_for_selector('input[type="file"]')
-                        file_input.set_input_files(screenshot['screenshot'])
-                        time.sleep(1)  # Wait for upload
-                    
-                    if i + 4 >= len(screenshots):
-                        # Last batch, just click tweet
-                        twitter_page.click('div[data-testid="tweetButton"]')
-                    else:
-                        # More screenshots to come, click "Add to thread"
-                        twitter_page.wait_for_selector('[aria-label="Add to thread"]').click()
-                        time.sleep(2)  # Wait for new tweet box
+                # Enter tweet text
+                tweet_text = "Check out this Dune Analytics dashboard: "
+                twitter_page.fill('div[data-testid="tweetTextarea_0"]', tweet_text)
                 
-                # Wait for tweet to complete
+                # Upload first 4 screenshots
+                for screenshot in screenshots[:4]:
+                    file_input = twitter_page.wait_for_selector('input[type="file"]', state="visible")
+                    file_input.set_input_files(screenshot['screenshot'])
+                    time.sleep(2)  # Wait for upload
+                
+                # Wait for all uploads to complete
                 time.sleep(3)
                 
-                self.logger.info("Successfully shared on Twitter")
+                # Click tweet button
+                twitter_page.click('div[data-testid="tweetButton"]')
+                
+                # Wait for tweet to complete
+                time.sleep(5)
                 
             finally:
                 # Don't close browser as it's user's browser
