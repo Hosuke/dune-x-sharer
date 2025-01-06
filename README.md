@@ -113,4 +113,14 @@ Contributions are welcome! Feel free to submit Pull Requests and Issues.
 
 ## License
 
-MIT License
+Apache License 2.0
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+### Why Apache 2.0?
+
+- **Patent Protection**: Includes explicit patent grant
+- **Clear Contribution Terms**: Well-defined terms for contributors
+- **Trademark Protection**: Clear terms for trademark usage
+- **Commercial Friendly**: Allows commercial use while protecting both users and contributors
+- **Comprehensive**: Includes explicit terms for modern software development needs
