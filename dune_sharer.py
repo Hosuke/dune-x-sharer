@@ -312,7 +312,7 @@ class DuneSharer:
             raise
 
     def share_on_twitter(self, dashboard_url, screenshots):
-        """Share screenshots on Twitter"""
+        """Share screenshots on Twitter/X using thread for more than 4 images"""
         try:
             # Connect to user's Chrome browser via CDP
             playwright = sync_playwright().start()
@@ -344,18 +344,27 @@ class DuneSharer:
                 # Wait for tweet button
                 twitter_page.wait_for_selector('div[data-testid="tweetTextarea_0"]')
                 
-                # Enter tweet text
-                tweet_text = f"Check out this Dune Analytics dashboard: "
-                twitter_page.fill('div[data-testid="tweetTextarea_0"]', tweet_text)
-                
-                # Upload screenshots
-                for screenshot in screenshots:
-                    file_input = twitter_page.wait_for_selector('input[type="file"]')
-                    file_input.set_input_files(screenshot['screenshot'])
-                    time.sleep(1)  # Wait for upload
-                
-                # Click tweet button
-                twitter_page.click('div[data-testid="tweetButton"]')
+                # Process screenshots in batches of 4
+                for i in range(0, len(screenshots), 4):
+                    batch = screenshots[i:i+4]
+                    
+                    # Enter tweet text
+                    tweet_text = "Check out this Dune Analytics dashboard: " if i == 0 else ""
+                    twitter_page.fill('div[data-testid="tweetTextarea_0"]', tweet_text)
+                    
+                    # Upload screenshots for this batch
+                    for screenshot in batch:
+                        file_input = twitter_page.wait_for_selector('input[type="file"]')
+                        file_input.set_input_files(screenshot['screenshot'])
+                        time.sleep(1)  # Wait for upload
+                    
+                    if i + 4 >= len(screenshots):
+                        # Last batch, just click tweet
+                        twitter_page.click('div[data-testid="tweetButton"]')
+                    else:
+                        # More screenshots to come, click "Add to thread"
+                        twitter_page.wait_for_selector('[aria-label="Add to thread"]').click()
+                        time.sleep(2)  # Wait for new tweet box
                 
                 # Wait for tweet to complete
                 time.sleep(3)
